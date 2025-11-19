@@ -79,7 +79,7 @@ def _display_user_events(events_list, username):
     if not events_list:
         raise ValueError("Could not get events\n")
     else:
-        print(f"Event{'s' if len(events_list) > 1 else ''} of [bold white]{username}[/bold white]:")
+        print(f"Event{'s' if len(events_list) > 1 else ''} of {username}:")
 
         for event in events_list:
             if event["type"] == "PushEvent":
