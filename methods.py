@@ -41,7 +41,7 @@ def get_user_events(username: str):
 
 def get_user_repositories(username: str):
     BASE_URL = f"{API_URL}/users/{username}/repos"
-    headers = authenticate()
+    headers = _authenticate()
     response_repos = requests.get(BASE_URL, headers=headers)
 
     if response_repos.status_code == 200:
