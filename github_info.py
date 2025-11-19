@@ -1,6 +1,6 @@
 import click
 
-from github_info import get_user_events, get_user_repositories
+from methods import get_user_events, get_user_repositories
 
 
 @click.command()

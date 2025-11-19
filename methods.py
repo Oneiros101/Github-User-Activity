@@ -5,7 +5,7 @@ API_URL = "https://api.github.com"
 TOKEN_FILE = "github_token.txt"
 
 
-def authenticate():
+def _authenticate():
     # read token from github_token file
     with open(TOKEN_FILE, "r") as file:
         GITHUB_TOKEN = file.read().strip("\n")
@@ -17,7 +17,7 @@ def authenticate():
 
 def get_user_events(username: str):
     BASE_URL = f"{API_URL}/users/{username}/events"
-    headers = authenticate()
+    headers = _authenticate()
     response_events = requests.get(BASE_URL, headers=headers)
 
     if response_events.status_code == 200:
@@ -26,7 +26,7 @@ def get_user_events(username: str):
             f"\n[bold green]Status code {response_events.status_code}: {response_events.reason}\n[/bold green]"
         )
         events = response_events.json()
-        display_user_events(events, username)
+        _display_user_events(events, username)
     else:
         # If we get 401 Unauthorized error code
         if response_events.status_code == 401:
@@ -50,7 +50,7 @@ def get_user_repositories(username: str):
             f"[bold green]\nStatus code {response_repos.status_code}: {response_repos.reason}\n[/bold green]"
         )
         repository = response_repos.json()
-        display_user_repositories(repository, username)
+        _display_user_repositories(repository, username)
     else:
         # If we get 401 Unauthorized error code
         if response_repos.status_code == 401:
@@ -63,7 +63,7 @@ def get_user_repositories(username: str):
             f"[bold red]\nStatus code {response_repos.status_code} is {response_repos.reason}\n[bold red]")
 
 
-def display_user_repositories(repo_list, username):
+def _display_user_repositories(repo_list, username):
     if not repo_list:
         raise ValueError("Could not get repos\n")
     else:
@@ -75,7 +75,7 @@ def display_user_repositories(repo_list, username):
         print(f"\nNumber of repos: {len(repo_list)}\n")
 
 
-def display_user_events(events_list, username):
+def _display_user_events(events_list, username):
     if not events_list:
         raise ValueError("Could not get events\n")
     else:
@@ -83,10 +83,17 @@ def display_user_events(events_list, username):
 
         for event in events_list:
             if event["type"] == "PushEvent":
-                commit_count = event["payload"]["size"]
+                # commit_count = event["payload"]["size"]   # 'size' has been removed from the documentation
+                # commits = event["payload"].get("commits", [])
+                # commit_count = len(commits)
+                #print(
+                #    f"- Pushed {commit_count} commit{'s' if commit_count > 1 else ''} to {event['repo']['name']} at"
+                #    f" {event['created_at']}"
+                #)
+                repo_name = event['repo']['name']
+                commit_creation_time = event['created_at']
                 print(
-                    f"- Pushed {commit_count} commit{'s' if commit_count > 1 else ''} to {event['repo']['name']} at"
-                    f" {event['created_at']}"
+                    f"- Pushed commit to {repo_name} at {commit_creation_time}"
                 )
 
             if event["type"] == "CreateEvent":
