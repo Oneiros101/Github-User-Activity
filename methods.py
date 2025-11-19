@@ -31,12 +31,12 @@ def get_user_events(username: str):
         # If we get 401 Unauthorized error code
         if response_events.status_code == 401:
             return rich_print(
-                f"[bold red]\nStatus code {response_events.status_code} is {response_events.reason}\n[bold red]"
+                f"[bold red]\nStatus code {response_events.status_code} is {response_events.reason}\n[/bold red]"
                 f"A new GitHub token will need to be generated from your account.\n"
             )
         # To know which non 200 status code hit us
         return rich_print(
-            f"[bold red]\nStatus code {response_events.status_code} is {response_events.reason}\n[bold red]")
+            f"[bold red]\nStatus code {response_events.status_code} is {response_events.reason}\n[/bold red]")
 
 
 def get_user_repositories(username: str):
@@ -55,12 +55,12 @@ def get_user_repositories(username: str):
         # If we get 401 Unauthorized error code
         if response_repos.status_code == 401:
             return rich_print(
-                f"[bold red]\nStatus code {response_repos.status_code} is {response_repos.reason}\n[bold red]"
+                f"[bold red]\nStatus code {response_repos.status_code} is {response_repos.reason}\n[/bold red]"
                 f"A new GitHub token will need to be generated from your account.\n"
             )
         # To know which non 200 status code hit us
         return rich_print(
-            f"[bold red]\nStatus code {response_repos.status_code} is {response_repos.reason}\n[bold red]")
+            f"[bold red]\nStatus code {response_repos.status_code} is {response_repos.reason}\n[/bold red]")
 
 
 def _display_user_repositories(repo_list, username):
@@ -79,11 +79,11 @@ def _display_user_events(events_list, username):
     if not events_list:
         raise ValueError("Could not get events\n")
     else:
-        print(f"Event{'s' if len(events_list) > 1 else ''} of {username}:")
+        print(f"Event{'s' if len(events_list) > 1 else ''} of [bold white]{username}[/bold white]:")
 
         for event in events_list:
             if event["type"] == "PushEvent":
-                # commit_count = event["payload"]["size"]   # 'size' has been removed from the documentation
+                # commit_count = event["payload"]["size"]   # 'size' has been removed from Github documentation
                 # commits = event["payload"].get("commits", [])
                 # commit_count = len(commits)
                 #print(
@@ -97,14 +97,7 @@ def _display_user_events(events_list, username):
                 )
 
             if event["type"] == "CreateEvent":
-                if event["payload"]["ref_type"] == "repository":
-                    print(
-                        f"- {event['repo']['name']} {event['payload']['ref_type']} has been created at {event['created_at']}"
-                    )
-                else:
-                    print(
-                        f"- {event['payload']['ref_type']} created in {event['repo']['name']} at {event['created_at']}"
-                    )
+                print(f"- {event['payload']['ref']} created in {event['repo']['name']} at {event['created_at']}")
 
             if event["type"] == "WatchEvent":
                 print(f"- Starred {event['repo']['name']} at {event['created_at']}")
