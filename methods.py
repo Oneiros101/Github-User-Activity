@@ -45,7 +45,7 @@ def get_user_repositories(username: str):
     response_repos = requests.get(BASE_URL, headers=headers)
 
     if response_repos.status_code == 200:
-        # a visual confirmation that we got a 200 response
+        # A visual confirmation that we got a 200 response
         rich_print(
             f"[bold green]\nStatus code {response_repos.status_code}: {response_repos.reason}\n[/bold green]"
         )
