@@ -83,7 +83,8 @@ def _display_user_events(events_list, username):
 
         for event in events_list:
             if event["type"] == "PushEvent":
-                # commit_count = event["payload"]["size"]   # 'size' has been removed from Github documentation
+                # 'size' has been removed from Github documentation
+                # commit_count = event["payload"]["size"]
                 # commits = event["payload"].get("commits", [])
                 # commit_count = len(commits)
                 #print(
@@ -92,13 +93,16 @@ def _display_user_events(events_list, username):
                 #)
                 repo_name = event['repo']['name']
                 commit_creation_time = event['created_at']
-                print(
-                    f"- Pushed commit to {repo_name} at {commit_creation_time}"
-                )
+                print(f"- Pushed commit to {repo_name} at {commit_creation_time}")
 
             if event["type"] == "CreateEvent":
-                print(f"- {event['payload']['ref']} created in {event['repo']['name']} at {event['created_at']}")
+                repo_name = event['repo']['name']
+                branch = event['payload']['ref']
+                commit_creation_time = event['created_at']
+                print(f"- {branch} created in {repo_name} at {commit_creation_time}")
 
             if event["type"] == "WatchEvent":
-                print(f"- Starred {event['repo']['name']} at {event['created_at']}")
+                repo_name = event['repo']['name']
+                star_creation_time = event['created_at']
+                print(f"- Starred {repo_name} at {star_creation_time}")
         print()
