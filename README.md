@@ -32,32 +32,32 @@ Run the command with either the `--repo` or `--events` option:
 ### Get Repositories
 
 ```bash
-python github_cli.py <username> --repo
+python github_user_info.py <username> --repo
 ```
 
 Example:
 ```bash
-python github_cli.py octocat --repo
+python github_user_info.py octocat --repo
 ```
 
 ### Get Events
 
 ```bash
-python github_cli.py <username> --events
+python github_user_info.py <username> --events
 ```
 
 Example:
 ```bash
-python github_cli.py octocat --events
+python github_user_info.py octocat --events
 ```
 
 ### Command Help
 
 ```
-python github_cli.py --help
+python github_user_info.py --help
 ```
 ```
-Usage: github_cli.py [OPTIONS] USERNAME
+Usage: github_user_info.py [OPTIONS] USERNAME
 
   Command-line tool for displaying GitHub user events and repositories
 
@@ -84,7 +84,7 @@ Number of repos: 3
 
 ```
 Events of octocat:
-- Pushed 2 commits to Hello-World at 2023-09-15T10:00:00Z
+- Pushed commit to Hello-World at 2023-09-15T10:00:00Z
 - Hello-World repository has been created at 2023-09-01T15:00:00Z
 ```
 
